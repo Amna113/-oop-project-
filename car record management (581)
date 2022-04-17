@@ -1,0 +1,286 @@
+#include <iostream>
+#include <fstream>
+#include <conio.h>
+using namespace std;
+class cars
+{
+	private:
+		string model;
+		int price,number;
+		string color;
+		string name;
+		string address,email;
+		int id;
+		public:
+			void manu();
+	        void insert();
+	        void display();
+	        void search();
+	        void deleted();
+};
+void cars::manu()
+{
+	system("color D0");
+	menustart:
+	int choice;
+	char x;
+	system("cls");
+	
+	cout<<"\t\t\t**************************************"<<endl;
+	cout<<"\t\t\t*      Cars management system        *"<<endl;
+	cout<<"\t\t\t**************************************"<<endl;
+	cout<<"\t\t\t\t1. Enter  New Recoard:"<<endl;
+	cout<<"\t\t\t\t2. Display  Recoard:"<<endl;
+	cout<<"\t\t\t\t3. Search Recoard:"<<endl;
+	cout<<"\t\t\t\t4. Delete Recoard:"<<endl;
+	cout<<"\t\t\t\t5. Exit:"<<endl;
+	
+	cout<<"\t\t\t**************************************"<<endl;
+	cout<<"\t\t\t*      Choose from 1 to 5 Numb       *"<<endl;
+	cout<<"\t\t\t**************************************"<<endl;
+	cout<<"Enter your choice:";
+	cin>>choice;
+	
+	switch(choice)
+	{
+		case 1:
+			do
+			{
+				insert();
+				cout<<"\nAdd another car detail:(Y,N)"<<endl;
+				cin>>x;
+			}
+			while(x=='y'||x=='Y');
+			
+		    break;
+		case 2:
+			display();
+			break;
+		case 3:
+			search();
+		    break;
+		case 4:
+		     deleted();
+			 break;		
+		case 5:
+		{
+			exit(0);
+		}	
+		default:
+			cout<<"\t\t\tInvalid choice!.....Please Try again";
+		  	
+	}
+	getch();
+	goto menustart;
+}
+ void cars::insert()   //add cars details
+{
+	system("color 05");
+	system("cls");
+	fstream file;
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	cout<<"\n----------------------  Add Car Details Here ----------------------------"<<endl;
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	cout<<"\n\tEnter model of car you want to see: ";
+	cin>>model;
+	cout<<"\tEnter which price of car you want: ";
+	cin>>price;
+	cin.ignore();
+	cout<<"\tEnter the color of car: ";
+	getline(cin,color);
+	cout<<"\n\nPlease Enter your details too."<<endl;
+	cout<<"Enter your full name:  ";
+	getline(cin,name);
+	cout<<"Enter your address:  ";
+	getline(cin,address);
+	cout<<"Enter your phone number:  ";
+	cin>>number;
+	cin.ignore();
+	cout<<"Enter your email address:  ";
+	getline(cin,email);
+	file.open("carselling.txt",ios::app|ios::out);//out
+        file << model << "\n";
+        file << color << "\n";
+        file << name << "\n";
+        file << address << "\n";
+        file << email << "\n";
+        file << number << " ";
+        file << price;
+        file.close();
+        cout << "\n\n\t\tRecord Inserted successfully!";
+}	
+void cars::display()
+{
+	system("color 05");
+	int count=0;
+	int id=0;
+	system("cls");
+	fstream file;
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	cout<<"\n----------------------Car Details you mension----------------------------"<<endl;
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	file.open("carselling.txt");
+	if(!file)
+	{
+		cout<<"\t\t\tError in file openning...."<<endl;
+		file.close();
+	}
+	else
+	{	
+		
+		while(!file.eof())
+		{	
+			
+			getline(file,model);
+        	getline(file,color);
+        	getline(file,name);
+        	getline(file,address);
+        	getline(file,email);
+        	file>>number;
+        	file>>price;
+        	cout <<"\n------------------------- Record ----------------------\n";
+			cout<<"YOUR ID IS:"<<id++<<endl;
+			cout<<"RECORD NO:"<<count++<<endl;
+			cout<<"MODEL OF CAR YOU ENTER IS:"<<model<<endl;
+			cout<<"PRICE YOU HAVE ENTERED IS:"<<price<<endl;
+			cout<<"COLOR OF CAR YOU HAVE ENTER IS:"<<color<<endl;
+			cout<<endl;
+			cout<<"YOUR NAME IS:"<<name<<endl;
+			cout<<"YOUR ADDRESS IS:"<<address<<endl;
+			cout<<"YOUR NUMBER IS:"<<number<<endl;
+			cout<<"YOUR EMAIL IS:"<<email<<endl;
+			
+		}
+		if(count==0)
+		{
+			cout<<"NO DATA IS HERE YET.";
+		}
+	}
+	file.close();
+}
+	void cars::search()
+	{
+		system("color 05");
+		int n;
+		int found=0;
+		system("cls");
+		fstream file;
+		file.open("carselling.txt");
+		if(!file)
+		{
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	cout<<"\n----------------------      Search Here      ----------------------------"<<endl;
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	cout<<endl;
+	cout<<"\t\t\tNO DATA IS PRESENT YET.....";
+		}
+	else
+	{
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	cout<<"\n----------------------      Search Here      ----------------------------"<<endl;
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	cout<<endl;
+	cin.ignore();
+	cout<<"ENTER ID OF THE PERSON YOU WaNT TO SEARCH: ";
+	cin>>n;
+	    
+	    	getline(file,model);
+        	getline(file,color);
+        	getline(file,name);
+        	getline(file,address);
+       	 	getline(file,email);
+        	file>>number;
+        	file>>price;
+	    
+		while(!file.eof());
+		{
+			if(n==number)
+			{
+			cout <<"\n------------------------- Record ----------------------\n";
+			cout<<"YOUR ID IS:"<<id++<<endl;
+			cout<<"MODEL OF CAR YOU ENTER IS:"<<model<<endl;
+			cout<<"PRICE YOU HAVE ENTERED IS:"<<price<<endl;
+			cout<<"COLOR OF CAR YOU HAVE ENTER IS:"<<color<<endl;
+			cout<<endl;
+			cout<<"YOUR NAME IS:"<<name<<endl;
+			cout<<"YOUR ADDRESS IS:"<<address<<endl;
+			cout<<"YOUR NUMBER IS:"<<number<<endl;
+			cout<<"YOUR EMAIL IS:"<<email<<endl;
+			
+			getline(file,model);
+        	getline(file,color);
+        	getline(file,name);
+        	getline(file,address);
+       	 	getline(file,email);
+        	file>>number;
+        	file>>price;	
+			found++;
+			}
+		}
+		if(found==0)
+		{
+			cout<<"\t\t\t SEARCHED DATA NOT FOUND...";
+		}
+		file.close();
+	}	
+	}
+void cars::deleted()
+{
+	system("color 05");
+	int found;
+	int d;
+	system("cls");
+	fstream file;
+	fstream temp;
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	cout<<"\n----------------------    DELETE DETAIL      ----------------------------"<<endl;
+	cout<<"\n-------------------------------------------------------------------------"<<endl;
+	cout<<endl;
+	file.open("carselling.txt");
+	if(!file)
+	{
+		cout<<"\t\t\tError in openning...."<<endl;
+	}
+	else
+	{
+		cout<<"ENTER THAT PERSON NUMBER THAT YOU WANT TO DELETe.";
+		cin>>d;
+		temp.open("temp.txt", ios::app | ios::out);	
+		while(!file.eof())
+		{
+			getline(file,model);
+        	getline(file,color);
+        	getline(file,name);
+        	getline(file,address);
+       	 	getline(file,email);
+        	file>>number;
+        	file>>price;
+			if(d!=number){
+              temp << model << "\n";
+        temp << color << "\n";
+        temp << name << "\n";
+        temp << address << "\n";
+        temp << email << "\n";
+        temp << number << " ";
+        temp << price;
+				
+			}	
+			
+		}
+		file.close();
+		temp.close();
+		remove("carselling.txt");
+		rename("temp.txt", "carselling.txt");
+		
+		cout <<"\nRecord Deleted Successfully!!!!\n";
+		model=" "; color=" ";name=" ";address=" "; email=" ";number=0; price=0;
+	}
+}	
+int main()
+{
+	cars c;
+	c.manu();
+
+    return 0;
+}
+
